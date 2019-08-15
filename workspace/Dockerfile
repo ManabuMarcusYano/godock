@@ -1101,12 +1101,18 @@ RUN if [ ${INSTALL_GNU_PARALLEL} = true ]; then \
   apt-get -y install parallel \
 ;fi
 
-
 ###########################################################################
 # Check PHP version:
 ###########################################################################
 
 RUN set -xe; php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
+
+
+###########################################################################
+# Go
+###########################################################################
+
+Run set -xe; ls
 
 #
 #--------------------------------------------------------------------------
@@ -1122,4 +1128,5 @@ RUN apt-get clean && \
     rm /var/log/lastlog /var/log/faillog
 
 # Set default work directory
-WORKDIR /var/www
+#WORKDIR /var/www
+WORKDIR /go/src

@@ -102,11 +102,28 @@ services:
       - backend
     links:
       - docker-in-docker
-  app:
-    build: .
+### Go ################################################
+  go:
+    build:
+      context: ./go
+      args:
+        - GO_VERSION=${GO_VERSION}
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+    environment:
+      - DOCKER_HOST=tcp://docker-in-docker:2375
     ports:
-      - "8080:8080"
-### Docker-in-Docker ################################################
+      - "${GO_PORT}:8080"
+    tty: true
+    depends_on:
+      - workspace
+    networks:
+      - backend
+    links:
+      - docker-in-docker
+### Docker-in-Docker ##################################
   docker-in-docker:
     image: docker:dind
     privileged: true
@@ -133,8 +150,12 @@ services:
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - "${MYSQL_PORT}:3306"
+    depends_on:
+      - workspace
     networks:
       - backend
+    links:
+      - docker-in-docker
 ### PHP-FPM ##############################################
   php-fpm:
     build:
