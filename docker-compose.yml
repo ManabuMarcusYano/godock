@@ -97,6 +97,7 @@ services:
       - "dockerhost:${DOCKER_HOST_IP}"
     ports:
       - "${WORKSPACE_SSH_PORT}:22"
+      - "${GO_PORT}:8080"
     tty: true
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
@@ -121,8 +122,6 @@ services:
       - "dockerhost:${DOCKER_HOST_IP}"
     environment:
       - DOCKER_HOST=tcp://docker-in-docker:2375
-    ports:
-      - "${GO_PORT}:8080"
     tty: true
     depends_on:
       - workspace
