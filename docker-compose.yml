@@ -89,6 +89,7 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
+        - INSTALL_PHP_EMBED=${INSTALL_PHP_EMBED}
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       - go:/usr/local/go

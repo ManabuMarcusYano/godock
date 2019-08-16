@@ -1114,7 +1114,16 @@ RUN set -xe; php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
 
 RUN echo "" >> ~/.bashrc && \
     echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc && \
-    echo 'export PATH="$PATH:/go/bin"' >> ~/.bashrc
+    echo 'export PATH="$PATH:/go/bin"' >> ~/.bashrc && \
+    echo 'export GOPATH="$HOME/go"' >> ~/.bashrc
+
+ARG INSTALL_PHP_EMBED=false
+
+RUN if [ ${INSTALL_PHP_EMBED} = true ]; then \
+    apt-get update && \
+    apt-get install -yqq php7.2-dev libphp7.2-embed \
+;fi
+
 
 #
 #--------------------------------------------------------------------------
@@ -1130,5 +1139,4 @@ RUN apt-get clean && \
     rm /var/log/lastlog /var/log/faillog
 
 # Set default work directory
-#WORKDIR /var/www
-WORKDIR /go/src
+WORKDIR /root/go/src
