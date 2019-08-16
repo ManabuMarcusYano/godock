@@ -11,6 +11,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   redis:
     driver: ${VOLUMES_DRIVER}
+  go:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 ### Workspace Utilities ##################################
@@ -89,6 +91,7 @@ services:
         - no_proxy
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - go:/usr/local/go
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
     ports:
@@ -97,6 +100,7 @@ services:
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
       - DOCKER_HOST=tcp://docker-in-docker:2375
+      - PATH=/go/bin:/usr/local/go/bin:$PATH
     networks:
       - frontend
       - backend
@@ -110,6 +114,8 @@ services:
         - GO_VERSION=${GO_VERSION}
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${DATA_PATH_HOST}/go:/data
+      - go:/usr/local/go
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
     environment:

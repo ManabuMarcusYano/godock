@@ -1112,7 +1112,9 @@ RUN set -xe; php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
 # Go
 ###########################################################################
 
-Run set -xe; ls
+RUN echo "" >> ~/.bashrc && \
+    echo 'export PATH="$PATH:/usr/local/go/bin"' >> ~/.bashrc && \
+    echo 'export PATH="$PATH:/go/bin"' >> ~/.bashrc
 
 #
 #--------------------------------------------------------------------------
