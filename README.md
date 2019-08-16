@@ -1,6 +1,6 @@
 # Godock
 
-[![MIT License][license-svg]][license-url]
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [Go](https://golang.org/) + [PHP](https://www.php.net/) development environment that runs on [Docker](https://www.docker.com/).
 
